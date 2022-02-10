@@ -7,6 +7,7 @@ from league_results_processor.dtos.game_result import game_result
 from league_results_processor.dtos.team import Team
 from league_results_processor.dtos.team_statistic import team_statistic
 from league_results_processor.enums.team_result import team_result
+from league_results_processor.exceptions.invalid_game_line_exception import InvalidGameLineException
 
 from league_results_processor.file_objects.ifile_object import ifile_object
 from league_results_processor.file_processors.simple_file_processor import simple_file_processor
@@ -32,6 +33,26 @@ class simple_file_processor_tests(unittest.TestCase):
         self.assertEqual(len(expected_results), len(game_results_list))
         for index, value in enumerate(expected_results):
             self.assertEqual(value.teamA.team.name, game_results_list[index].teamA.team.name)
+
+    def test_throws_execption_when_invalid_score_provided_away_team(self):
+        # Arrange
+        input_file_lines: List[ifile_object] = self.get_invalid_input_line_away()
+        expected_results: List[game_result] = self.get_expected_small_results_set()
+        file_processor = simple_file_processor()
+        # Act
+        with self.assertRaises(InvalidGameLineException):
+            file_processor.process_file(input_file_objects=input_file_lines)
+        # Assert
+
+    def test_throws_execption_when_invalid_score_provided_home_team(self):
+        # Arrange
+        input_file_lines: List[ifile_object] = self.get_invalid_input_line_home()
+        expected_results: List[game_result] = self.get_expected_small_results_set()
+        file_processor = simple_file_processor()
+        # Act
+        with self.assertRaises(InvalidGameLineException):
+            file_processor.process_file(input_file_objects=input_file_lines)
+        # Assert
 
     def get_input_lines_small_file(self) -> List[ifile_object]:
         return [
@@ -64,6 +85,16 @@ class simple_file_processor_tests(unittest.TestCase):
                 teamA=team_statistic(team=Team("Lions"), goals_scored=4, team_result=team_result.WIN),
                 teamB=team_statistic(team=Team("Grouches"), goals_scored=0, team_result=team_result.LOSE)
             )
+        ]
+
+    def get_invalid_input_line_away(self) -> List[ifile_object]:
+        return [
+            ifile_object("Lions 1, FC Awesome a"),
+        ]
+
+    def get_invalid_input_line_home(self) -> List[ifile_object]:
+        return [
+            ifile_object("Lions a, FC Awesome 1"),
         ]
 
 
