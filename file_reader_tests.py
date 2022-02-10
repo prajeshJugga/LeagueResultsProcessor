@@ -1,7 +1,6 @@
-from ast import List
-from math import exp
 import sys
 import os
+from typing import List
 import unittest
 
 from league_results_processor.file_objects.ifile_object import ifile_object
@@ -16,17 +15,16 @@ sys.path.append(os.path.dirname(CURRENT_DIR))
 class simple_file_readerTests(unittest.TestCase):
     """docstring for ClassName."""
 
-    def successfully_read_file(self, file_path, expected_lines: List(ifile_object), file_reader: simple_file_reader):
+    def successfully_read_file(self, file_path, expected_lines: List[ifile_object], file_reader: simple_file_reader):
         # Arrange
         # Act
-        actual_lines: List(ifile_object) = file_reader.read_file(file_path=file_path)
+        actual_lines: List[ifile_object] = file_reader.read_file(file_path=file_path)
         # Assert
         self.maxDiff = None
         self.assertEqual(len(expected_lines), len(actual_lines))
         for index, value in enumerate(expected_lines):
-            print(index, value.file_line)
+            # print(index, value.file_line)
             self.assertEqual(value.file_line, actual_lines[index].file_line)
-        # self.assertCountEqual(expected_lines, actual_lines)
 
     def test_successfully_read_small_well_formatted_file(self):
         # Arrange
@@ -36,7 +34,7 @@ class simple_file_readerTests(unittest.TestCase):
         # Act and Assert
         self.successfully_read_file(file_path=file_path, expected_lines=self.get_expected_lines_small_file(), file_reader=file_reader)
 
-    def get_expected_lines_small_file(self) -> List(ifile_object):
+    def get_expected_lines_small_file(self) -> List[ifile_object]:
         return [
             ifile_object("Lions 3, Snakes 3"),
             ifile_object("Tarantulas 1, FC Awesome 0"),
