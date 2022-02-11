@@ -6,7 +6,7 @@ import unittest
 from league_results_processor.dtos.game_result import game_result
 from league_results_processor.dtos.team import Team
 from league_results_processor.dtos.team_statistic import team_statistic
-from league_results_processor.enums.team_result import team_result
+from league_results_processor.enums.team_result import TeamResult
 from league_results_processor.exceptions.invalid_game_line_exception import InvalidGameLineException
 
 from league_results_processor.file_objects.ifile_object import ifile_object
@@ -49,12 +49,12 @@ class simple_game_results_calculator_tests(unittest.TestCase):
         # Arrange
         simple_game_calculator = SimpleGameResultCalculator()
         input_game_result = game_result(
-            teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=team_result.NOT_CALCULATED),
-            teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=team_result.NOT_CALCULATED)
+            teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=TeamResult.NOT_CALCULATED),
+            teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=TeamResult.NOT_CALCULATED)
         )
         expected_draw_game_result = game_result(
-            teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=team_result.DRAW),
-            teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=team_result.DRAW)
+            teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=TeamResult.DRAW),
+            teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=TeamResult.DRAW)
         )
         # Act and Assert
         self.correctly_determines_result(simple_game_calculator=simple_game_calculator, input_game_result=input_game_result, expected_game_result=expected_draw_game_result)
@@ -63,12 +63,12 @@ class simple_game_results_calculator_tests(unittest.TestCase):
         # Arrange
         simple_game_calculator = SimpleGameResultCalculator()
         input_game_result = game_result(
-            teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=team_result.NOT_CALCULATED),
-            teamB=team_statistic(team=Team("Snakes"), goals_scored=0, team_result=team_result.NOT_CALCULATED)
+            teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=TeamResult.NOT_CALCULATED),
+            teamB=team_statistic(team=Team("Snakes"), goals_scored=0, team_result=TeamResult.NOT_CALCULATED)
         )
         expected_draw_game_result = game_result(
-            teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=team_result.WIN),
-            teamB=team_statistic(team=Team("Snakes"), goals_scored=0, team_result=team_result.LOSE)
+            teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=TeamResult.WIN),
+            teamB=team_statistic(team=Team("Snakes"), goals_scored=0, team_result=TeamResult.LOSE)
         )
         # Act and Assert
         self.correctly_determines_result(simple_game_calculator=simple_game_calculator, input_game_result=input_game_result, expected_game_result=expected_draw_game_result)
@@ -77,12 +77,12 @@ class simple_game_results_calculator_tests(unittest.TestCase):
         # Arrange
         simple_game_calculator = SimpleGameResultCalculator()
         input_game_result = game_result(
-            teamA=team_statistic(team=Team("Lions"), goals_scored=0, team_result=team_result.NOT_CALCULATED),
-            teamB=team_statistic(team=Team("Snakes"), goals_scored=1, team_result=team_result.NOT_CALCULATED)
+            teamA=team_statistic(team=Team("Lions"), goals_scored=0, team_result=TeamResult.NOT_CALCULATED),
+            teamB=team_statistic(team=Team("Snakes"), goals_scored=1, team_result=TeamResult.NOT_CALCULATED)
         )
         expected_draw_game_result = game_result(
-            teamA=team_statistic(team=Team("Lions"), goals_scored=0, team_result=team_result.LOSE),
-            teamB=team_statistic(team=Team("Snakes"), goals_scored=1, team_result=team_result.WIN)
+            teamA=team_statistic(team=Team("Lions"), goals_scored=0, team_result=TeamResult.LOSE),
+            teamB=team_statistic(team=Team("Snakes"), goals_scored=1, team_result=TeamResult.WIN)
         )
         # Act and Assert
         self.correctly_determines_result(simple_game_calculator=simple_game_calculator, input_game_result=input_game_result, expected_game_result=expected_draw_game_result)

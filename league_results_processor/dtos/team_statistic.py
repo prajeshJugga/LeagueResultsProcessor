@@ -1,12 +1,12 @@
 from league_results_processor.dtos.dto import DTO
 from league_results_processor.dtos.team import Team
-from league_results_processor.enums.team_result import team_result
+from league_results_processor.enums.team_result import TeamResult
 
 
 class team_statistic(DTO):
     """docstring for ClassName."""
     # def __init__(self, team: team, goals_scored: int,  goals_conceded: int, team_result: team_result):
-    def __init__(self, team: Team, goals_scored: int,  team_result: team_result):
+    def __init__(self, team: Team, goals_scored: int,  team_result: TeamResult):
         super(team_statistic, self).__init__()
         self.team = team
         self.goals_scored = goals_scored

@@ -6,7 +6,7 @@ import unittest
 from league_results_processor.dtos.game_result import game_result
 from league_results_processor.dtos.team import Team
 from league_results_processor.dtos.team_statistic import team_statistic
-from league_results_processor.enums.team_result import team_result
+from league_results_processor.enums.team_result import TeamResult
 from league_results_processor.exceptions.invalid_game_line_exception import InvalidGameLineException
 
 from league_results_processor.file_objects.ifile_object import ifile_object
@@ -76,24 +76,24 @@ class simple_file_processor_tests(unittest.TestCase):
     def get_expected_small_results_set(self) -> List[game_result]:
         return [
             game_result(
-                teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=team_result.DRAW),
-                teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=team_result.DRAW)
+                teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=TeamResult.DRAW),
+                teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=TeamResult.DRAW)
             ),
             game_result(
-                teamA=team_statistic(team=Team("Tarantulas"), goals_scored=1, team_result=team_result.WIN),
-                teamB=team_statistic(team=Team("FC Awesome"), goals_scored=0, team_result=team_result.LOSE)
+                teamA=team_statistic(team=Team("Tarantulas"), goals_scored=1, team_result=TeamResult.WIN),
+                teamB=team_statistic(team=Team("FC Awesome"), goals_scored=0, team_result=TeamResult.LOSE)
             ),
             game_result(
-                teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=team_result.DRAW),
-                teamB=team_statistic(team=Team("FC Awesome"), goals_scored=1, team_result=team_result.DRAW)
+                teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=TeamResult.DRAW),
+                teamB=team_statistic(team=Team("FC Awesome"), goals_scored=1, team_result=TeamResult.DRAW)
             ),
             game_result(
-                teamA=team_statistic(team=Team("Tarantulas"), goals_scored=3, team_result=team_result.WIN),
-                teamB=team_statistic(team=Team("Snakes"), goals_scored=1, team_result=team_result.LOSE)
+                teamA=team_statistic(team=Team("Tarantulas"), goals_scored=3, team_result=TeamResult.WIN),
+                teamB=team_statistic(team=Team("Snakes"), goals_scored=1, team_result=TeamResult.LOSE)
             ),
             game_result(
-                teamA=team_statistic(team=Team("Lions"), goals_scored=4, team_result=team_result.WIN),
-                teamB=team_statistic(team=Team("Grouches"), goals_scored=0, team_result=team_result.LOSE)
+                teamA=team_statistic(team=Team("Lions"), goals_scored=4, team_result=TeamResult.WIN),
+                teamB=team_statistic(team=Team("Grouches"), goals_scored=0, team_result=TeamResult.LOSE)
             )
         ]
 

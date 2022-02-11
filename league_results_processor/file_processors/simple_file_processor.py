@@ -3,7 +3,7 @@ from typing import List
 from league_results_processor.dtos.game_result import game_result
 from league_results_processor.dtos.team import Team
 from league_results_processor.dtos.team_statistic import team_statistic
-from league_results_processor.enums.team_result import team_result
+from league_results_processor.enums.team_result import TeamResult
 from league_results_processor.exceptions.invalid_game_line_exception import InvalidGameLineException
 from league_results_processor.file_objects.ifile_object import ifile_object
 from league_results_processor.file_objects.simple_game_results_line import simple_game_results_line
@@ -49,5 +49,5 @@ class simple_file_processor(ifile_processor):
         return team_statistic(
             team=Team(self.__get_team_name(team_result_string=team_result_line)),
             goals_scored=self.__get_goals_scored(team_result_string=team_result_line),
-            team_result=team_result.NOT_CALCULATED
+            team_result=TeamResult.NOT_CALCULATED
         )
