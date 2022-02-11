@@ -7,7 +7,7 @@ class Team(DTO):
         self.name = name
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @name.setter

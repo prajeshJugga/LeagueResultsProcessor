@@ -12,7 +12,7 @@ from league_results_processor.file_readers.simple_file_reader import simple_file
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(CURRENT_DIR))
 
-class simple_file_readerTests(unittest.TestCase):
+class simple_file_reader_tests(unittest.TestCase):
     """docstring for ClassName."""
 
     def successfully_read_file(self, file_path, expected_lines: List[ifile_object], file_reader: simple_file_reader):

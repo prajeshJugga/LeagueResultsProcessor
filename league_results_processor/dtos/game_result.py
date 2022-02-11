@@ -9,7 +9,7 @@ class game_result(DTO):
         self.teamB = teamB
 
     @property
-    def teamA(self):
+    def teamA(self) -> team_statistic:
         return self._teamA
 
     @teamA.setter
@@ -17,7 +17,7 @@ class game_result(DTO):
         self._teamA = value
 
     @property
-    def teamB(self):
+    def teamB(self) -> team_statistic:
         return self._teamB
 
     @teamB.setter

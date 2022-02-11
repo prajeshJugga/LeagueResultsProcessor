@@ -14,7 +14,7 @@ class team_statistic(DTO):
         self.team_result = team_result
 
     @property
-    def team(self):
+    def team(self) -> Team:
         return self._team
 
     @team.setter

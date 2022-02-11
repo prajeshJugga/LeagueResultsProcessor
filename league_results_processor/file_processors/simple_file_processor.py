@@ -8,20 +8,25 @@ from league_results_processor.exceptions.invalid_game_line_exception import Inva
 from league_results_processor.file_objects.ifile_object import ifile_object
 from league_results_processor.file_objects.simple_game_results_line import simple_game_results_line
 from league_results_processor.file_processors.ifile_processor import ifile_processor
+from league_results_processor.game_result_calculators.igame_result_calculator import IGameResultCalculator
+from league_results_processor.game_result_calculators.simple_game_result_calculator import SimpleGameResultCalculator
 
 class simple_file_processor(ifile_processor):
     """docstring for ClassName."""
-    def __init__(self):
-        super(simple_file_processor, self).__init__()
+    # def __init__(self):
+    #     super(simple_file_processor, self).__init__()
+        #self.game_result_calculator = game_result_calculator
 
     def process_file(self, input_file_objects: List[simple_game_results_line]) -> List[game_result]:
         game_results = []
         for value in input_file_objects:
             team_result_lines = self.__get_team_result_strings(value)
-            game_results.append(game_result(
+            game_result_obj = game_result(
                 teamA = self.__get_team_result(team_result_line=team_result_lines[0]),
                 teamB = self.__get_team_result(team_result_line=team_result_lines[-1])
-            ))
+            )
+            self.game_result_calculator.determine_game_result(game_result=game_result_obj)
+            game_results.append(game_result_obj)
         return game_results
 
     def __get_team_result_strings(self, game_result: simple_game_results_line) -> List[str]:
