@@ -1,10 +1,12 @@
 
 # main.py
+from asyncio.log import logger
 from ctypes import ArgumentError
 from datetime import date, datetime
 import sys
 from typing import List
 import logging
+import logging.config
 
 from league_results_processor.dtos.game_points import GamePoints
 from league_results_processor.dtos.game_result import game_result
@@ -17,12 +19,18 @@ from league_results_processor.file_writers.simple_output_file_formatter import S
 from league_results_processor.game_result_calculators.simple_game_result_calculator import SimpleGameResultCalculator
 from league_results_processor.league_calculators.simple_league_table_calculator import SimpleLeagueTableCalculator
 
-
+def get_logger(logfilename):
+    config_file = ('log.config')
+    logging.config.fileConfig(config_file, defaults={'logfilename': logfilename}, disable_existing_loggers=False)
+    logger = logging.getLogger("main")
+    return logger
 
 date_time_now = datetime.now()
 log_file_name = date_time_now.strftime("%d-%b-%Y") + "-app.log"
 
-logging.basicConfig(filename=log_file_name, filemode='a', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
+# logging.basicConfig(filename=log_file_name, filemode='a', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
+
+logger = get_logger(logfilename=log_file_name)
 
 if __name__ == "__main__":
     try:
@@ -35,24 +43,24 @@ if __name__ == "__main__":
         input_file_path = sys.argv[1]
 
         print("Reading file at path: " + input_file_path)
-        logging.info("Reading file at path: " + input_file_path)
+        logger.info("Reading file at path: " + input_file_path)
         file_reader = SimpleFileReader()
         input_file_lines: List[simple_game_results_line] = file_reader.read_file(input_file_path)
 
         print("Processing into usable objects ...")
-        logging.info("Processing into game result objects ...")
+        logger.info("Processing into game result objects ...")
         simple_game_calculator = SimpleGameResultCalculator()
         file_processor = simple_file_processor(simple_game_calculator)
         game_results = file_processor.process_file(input_file_objects=input_file_lines)
 
         print("Processing results into league table ...")
-        logging.info("Processing results into league table ...")
+        logger.info("Processing results into league table ...")
         game_points = GamePoints(win_points=3, draw_points=1, loss_points=0)
         league_calculator = SimpleLeagueTableCalculator(game_points)
         league_table = league_calculator.get_league_table(game_results_list=game_results)
 
         print("Writing league table to output file ...")
-        logging.info("Writing league table to output file ...")
+        logger.info("Writing league table to output file ...")
         output_file_formatter = SimpleOutputFileFormatter()
         simple_file_writer = SimpleFileWriter(output_file_formatter)
 
@@ -63,6 +71,8 @@ if __name__ == "__main__":
         simple_file_writer.write_to_file(output_file_path=output_file_path, league_rows=league_table)
 
         print("Successfully processed league table ...")
-        logging.info("Successfully processed league table ...")
+        logger.info("Successfully processed league table ...")
     except Exception as e:
-        logging.error("Unexpected error ocurred while processing file: " + e.message)
+        logger.error("Unexpected error ocurred while processing file: " + e.message)
+
+
