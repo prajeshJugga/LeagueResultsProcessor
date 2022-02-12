@@ -5,6 +5,7 @@ import unittest
 from league_results_processor.dtos.game_points import GamePoints
 
 from league_results_processor.dtos.game_result import game_result
+from league_results_processor.dtos.league_table_row import LeagueTableRow
 from league_results_processor.dtos.simple_league_table_row import SimpleLeagueTableRow
 from league_results_processor.dtos.team import Team
 from league_results_processor.dtos.team_statistic import team_statistic
@@ -47,6 +48,39 @@ class simple_file_processor_tests(unittest.TestCase):
         # Act and Assert
         self.calculate_league_table(game_results=game_results, expected_league_table=self.get_expected_league_table_for_teams_that_have_same_points(), league_calculator=league_calculator)
 
+    def test_calculates_correct_positions_for_single_draw_game_result(self):
+        # Arrange
+        game_results = [
+            game_result(
+                teamA=team_statistic(team=Team("Lions"), goals_scored=3, team_result=TeamResult.DRAW),
+                teamB=team_statistic(team=Team("Snakes"), goals_scored=3, team_result=TeamResult.DRAW)
+            )
+        ]
+        game_points = GamePoints(3, 1, 0)
+        league_calculator = SimpleLeagueTableCalculator(game_points)
+        expected_league_table = [
+            SimpleLeagueTableRow(Team("Lions"), points=1, games_played=1, league_position=1),
+            SimpleLeagueTableRow(Team("Snakes"), points=1, games_played=1, league_position=1),
+        ]
+        # Act and Assert
+        self.calculate_league_table(game_results=game_results, expected_league_table=expected_league_table, league_calculator=league_calculator)
+
+    def test_calculates_correct_positions_for_single_winning_game_result(self):
+        # Arrange
+        game_results = [
+            game_result(
+                teamA=team_statistic(team=Team("Lions"), goals_scored=1, team_result=TeamResult.WIN),
+                teamB=team_statistic(team=Team("Snakes"), goals_scored=0, team_result=TeamResult.LOSE)
+            )
+        ]
+        game_points = GamePoints(3, 1, 0)
+        league_calculator = SimpleLeagueTableCalculator(game_points)
+        expected_league_table = [
+            SimpleLeagueTableRow(Team("Lions"), points=3, games_played=1, league_position=1),
+            SimpleLeagueTableRow(Team("Snakes"), points=0, games_played=1, league_position=2),
+        ]
+        # Act and Assert
+        self.calculate_league_table(game_results=game_results, expected_league_table=expected_league_table, league_calculator=league_calculator)
 
     def get_different_game_results(self) -> List[game_result]:
         return [
@@ -80,7 +114,6 @@ class simple_file_processor_tests(unittest.TestCase):
             SimpleLeagueTableRow(Team("Snakes"), points=1, games_played=2, league_position=3),
             SimpleLeagueTableRow(Team("Grouches"), points=0, games_played=1, league_position=5)
         ]
-
 
     def get_game_results_where_teams_have_same_points(self) -> List[game_result]:
         return [
