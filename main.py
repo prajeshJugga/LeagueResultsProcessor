@@ -22,7 +22,7 @@ from league_results_processor.league_calculators.simple_league_table_calculator 
 date_time_now = datetime.now()
 log_file_name = date_time_now.strftime("%d-%b-%Y") + "-app.log"
 
-logging.basicConfig(filename=log_file_name, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y')
+logging.basicConfig(filename=log_file_name, filemode='a', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 
 if __name__ == "__main__":
     try:
@@ -35,24 +35,24 @@ if __name__ == "__main__":
         input_file_path = sys.argv[1]
 
         print("Reading file at path: " + input_file_path)
-        logging.warning("Reading file at path: " + input_file_path)
+        logging.info("Reading file at path: " + input_file_path)
         file_reader = SimpleFileReader()
         input_file_lines: List[simple_game_results_line] = file_reader.read_file(input_file_path)
 
         print("Processing into usable objects ...")
-        logging.warning("Processing into game result objects ...")
+        logging.info("Processing into game result objects ...")
         simple_game_calculator = SimpleGameResultCalculator()
         file_processor = simple_file_processor(simple_game_calculator)
         game_results = file_processor.process_file(input_file_objects=input_file_lines)
 
         print("Processing results into league table ...")
-        logging.warning("Processing results into league table ...")
+        logging.info("Processing results into league table ...")
         game_points = GamePoints(win_points=3, draw_points=1, loss_points=0)
         league_calculator = SimpleLeagueTableCalculator(game_points)
         league_table = league_calculator.get_league_table(game_results_list=game_results)
 
         print("Writing league table to output file ...")
-        logging.warning("Writing league table to output file ...")
+        logging.info("Writing league table to output file ...")
         output_file_formatter = SimpleOutputFileFormatter()
         simple_file_writer = SimpleFileWriter(output_file_formatter)
 
@@ -61,5 +61,8 @@ if __name__ == "__main__":
         dt_string = date_time_now.strftime("%d%m%Y_%H-%M-%S")
         output_file_path = "league_table_" + dt_string + ".txt"
         simple_file_writer.write_to_file(output_file_path=output_file_path, league_rows=league_table)
+
+        print("Successfully processed league table ...")
+        logging.info("Successfully processed league table ...")
     except Exception as e:
-        logging.error("Unexpected error ocurred while processing file: " + e)
+        logging.error("Unexpected error ocurred while processing file: " + e.message)
