@@ -44,7 +44,7 @@ class simple_file_reader_tests(unittest.TestCase):
         ]
 
     def get_root_directory(self):
-        root_directory = os.path.join(os.getcwd(), "sample_files")
+        root_directory = os.path.join(os.getcwd(), "tests", "sample_files")
         return root_directory
 
 if __name__ == '__main__':

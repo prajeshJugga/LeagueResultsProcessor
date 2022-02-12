@@ -9,7 +9,7 @@ class SimpleOutputFileFormatter(IOutputFileFormatter):
         super(SimpleOutputFileFormatter, self).__init__()
 
     def get_formatted_output_line(self, league_table_row: SimpleLeagueTableRow) -> str:
-        output_line = '{position}. {team}, {points} pt'.format(position=league_table_row.league_position, team=league_table_row.team.name, points=league_table_row.points)
+        output_line = '{position}. {team}, {points} '.format(position=league_table_row.league_position, team=league_table_row.team.name, points=league_table_row.points)
         if league_table_row.points == 1:
-            return output_line
-        return output_line + 's'
+            return output_line + 'pt'
+        return output_line + 'pts'
