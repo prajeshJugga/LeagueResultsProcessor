@@ -48,6 +48,14 @@ class simple_file_processor_tests(unittest.TestCase):
         # Act and Assert
         self.calculate_league_table(game_results=game_results, expected_league_table=self.get_expected_league_table_for_teams_that_have_same_points(), league_calculator=league_calculator)
 
+    def test_calculates_correct_positions_for_teams_that_all_have_different_points(self):
+        # Arrange
+        game_results = self.get_game_results_where_teams_have_same_points()
+        game_points = GamePoints(3, 1, 0)
+        league_calculator = SimpleLeagueTableCalculator(game_points)
+        # Act and Assert
+        self.calculate_league_table(game_results=game_results, expected_league_table=self.get_expected_league_table_for_teams_that_have_same_points(), league_calculator=league_calculator)
+
     def test_calculates_correct_positions_for_single_draw_game_result(self):
         # Arrange
         game_results = [
@@ -152,6 +160,7 @@ class simple_file_processor_tests(unittest.TestCase):
             SimpleLeagueTableRow(Team("Snakes"), points=1, games_played=1, league_position=1),
             SimpleLeagueTableRow(Team("Tarantulas"), points=1, games_played=1, league_position=1)
         ]
+
 
 if __name__ == '__main__':
     unittest.main()
