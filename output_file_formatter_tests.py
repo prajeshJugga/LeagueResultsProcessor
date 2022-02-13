@@ -6,7 +6,7 @@ from league_results_processor.dtos.simple_league_table_row import SimpleLeagueTa
 from league_results_processor.dtos.team import Team
 
 from league_results_processor.file_objects.ifile_object import ifile_object
-from league_results_processor.file_readers.simple_file_reader import simple_file_reader
+from league_results_processor.file_readers.simple_file_reader import SimpleFileReader
 from league_results_processor.file_writers.simple_output_file_formatter import SimpleOutputFileFormatter
 
 # Import the current working directory to import modules from an upper directory

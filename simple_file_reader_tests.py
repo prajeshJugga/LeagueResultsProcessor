@@ -4,7 +4,7 @@ from typing import List
 import unittest
 
 from league_results_processor.file_objects.ifile_object import ifile_object
-from league_results_processor.file_readers.simple_file_reader import simple_file_reader
+from league_results_processor.file_readers.simple_file_reader import SimpleFileReader
 
 # Import the current working directory to import modules from an upper directory
 # sys.path.append(os.path.join(os.getcwd()))
@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(CURRENT_DIR))
 class simple_file_reader_tests(unittest.TestCase):
     """docstring for ClassName."""
 
-    def successfully_read_file(self, file_path, expected_lines: List[ifile_object], file_reader: simple_file_reader):
+    def successfully_read_file(self, file_path, expected_lines: List[ifile_object], file_reader: SimpleFileReader):
         # Arrange
         # Act
         actual_lines: List[ifile_object] = file_reader.read_file(file_path=file_path)
@@ -28,7 +28,7 @@ class simple_file_reader_tests(unittest.TestCase):
 
     def test_successfully_read_small_well_formatted_file(self):
         # Arrange
-        file_reader: simple_file_reader = simple_file_reader()
+        file_reader: SimpleFileReader = SimpleFileReader()
         root_directory = self.get_root_directory()
         file_path = os.path.join(root_directory, 'valid_small_file.txt')
         # Act and Assert
