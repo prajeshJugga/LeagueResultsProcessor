@@ -1,4 +1,3 @@
-from tokenize import Double
 from typing import List
 from league_results_processor.dtos.game_points import GamePoints
 from league_results_processor.dtos.game_result import game_result
@@ -9,8 +8,6 @@ from league_results_processor.league_calculators.ileague_table_calculator import
 
 class SimpleLeagueTableCalculator(ILeagueTableCalculator):
     """docstring for ClassName."""
-    # def __init__(self):
-    #     super(SimpleLeagueTableCalculator, self).__init__()
 
     def get_league_table(self, game_results_list: List[game_result]) -> List[SimpleLeagueTableRow]:
         league_table_rows = []
@@ -26,7 +23,7 @@ class SimpleLeagueTableCalculator(ILeagueTableCalculator):
 
     def __get_sorted_league_table(self, league_rows: List[SimpleLeagueTableRow]):
         league_rows = sorted(league_rows, key=lambda x: (-x.points, x.team.name))
-        previous_points: Double = 0
+        previous_points: float = 0
         for index, value in enumerate(league_rows):
             # print("team: ", value.team.name, "points: ", value.points, "position: ", value.league_position)
             if self.__is_tied_on_points(previous_points, value):
@@ -36,7 +33,7 @@ class SimpleLeagueTableCalculator(ILeagueTableCalculator):
             previous_points = value.points
         return league_rows
 
-    def __is_tied_on_points(self, previous_points: Double, league_row: SimpleLeagueTableRow):
+    def __is_tied_on_points(self, previous_points: float, league_row: SimpleLeagueTableRow):
         return previous_points == league_row.points
 
     def __set_teams_points(self, team: Team, game_result: game_result, league_table_row: SimpleLeagueTableRow):
@@ -47,7 +44,7 @@ class SimpleLeagueTableCalculator(ILeagueTableCalculator):
             league_table_row.points += self.__get_teams_points_for_result(team_result=game_result.teamB.team_result, game_points=self.game_points)
             league_table_row.games_played += 1
 
-    def __get_teams_points_for_result(self, team_result: TeamResult, game_points: GamePoints) -> Double:
+    def __get_teams_points_for_result(self, team_result: TeamResult, game_points: GamePoints) -> float:
         points_dictionary = {
             TeamResult.WIN : game_points.win_points,
             TeamResult.DRAW : game_points.draw_points,
