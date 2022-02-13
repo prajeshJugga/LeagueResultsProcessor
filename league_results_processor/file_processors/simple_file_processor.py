@@ -1,4 +1,3 @@
-from msilib.schema import Error
 from typing import List
 from league_results_processor.dtos.game_result import game_result
 from league_results_processor.dtos.team import Team
