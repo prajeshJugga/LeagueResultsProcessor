@@ -1,4 +1,3 @@
-from operator import attrgetter
 from tokenize import Double
 from typing import List
 from league_results_processor.dtos.game_points import GamePoints

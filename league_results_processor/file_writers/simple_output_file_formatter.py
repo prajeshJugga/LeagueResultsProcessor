@@ -1,5 +1,3 @@
-from turtle import position
-from league_results_processor.dtos.league_table_row import LeagueTableRow
 from league_results_processor.dtos.simple_league_table_row import SimpleLeagueTableRow
 from league_results_processor.file_writers.ioutput_file_formatter import IOutputFileFormatter
 

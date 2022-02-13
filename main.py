@@ -1,8 +1,6 @@
 
 # main.py
-from asyncio.log import logger
-from ctypes import ArgumentError
-from datetime import date, datetime
+from datetime import datetime
 import sys
 from typing import List
 import logging

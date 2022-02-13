@@ -1,4 +1,3 @@
-from typing import List
 from league_results_processor.dtos.game_result import game_result
 from league_results_processor.enums.team_result import TeamResult
 from league_results_processor.game_result_calculators.igame_result_calculator import IGameResultCalculator

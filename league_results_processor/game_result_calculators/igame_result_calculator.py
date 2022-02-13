@@ -1,4 +1,3 @@
-from typing import List
 from league_results_processor.dtos.game_result import game_result
 
 class IGameResultCalculator:
